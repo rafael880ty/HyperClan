@@ -139,6 +139,21 @@
       justify-content: center;
       font-weight: bold;
       flex-shrink: 0;
+      position: relative;
+    }
+
+    /* === Círculo dourado e coroa para Top 1 === */
+    .member-avatar.top1 {
+      border: 3px solid gold;
+      padding: 2px;
+      box-shadow: 0 0 10px gold;
+    }
+
+    .crown-top {
+      position: absolute;
+      top: -15px;
+      font-size: 1.2rem;
+      color: gold;
     }
 
     .crown {
@@ -362,8 +377,14 @@
     topMembers.forEach((m, i) => {
       const div = document.createElement('div');
       div.className = 'member-card';
+      
+      const isTop1 = i === 0;
+      
       div.innerHTML = `
-        <div class="member-avatar">${m.name.charAt(0)}</div>
+        <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+          ${isTop1 ? '<div class="crown-top">👑</div>' : ''}
+          <div class="member-avatar ${isTop1 ? 'top1' : ''}">${m.name.charAt(0)}</div>
+        </div>
         <div style="flex:1;">
           <div style="font-weight:bold;">${m.name} <span style="opacity:0.7; font-size:0.8rem;">${m.tag}</span></div>
           <div style="opacity:0.8; font-size:0.9rem;">Pontos: ${m.score}</div>
@@ -403,4 +424,3 @@
   </script>
 </body>
 </html>
-
