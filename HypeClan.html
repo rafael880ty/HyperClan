@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HyperClan</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: black;
+      color: white;
+      transition: background-color 0.6s ease, color 0.6s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid gray;
+      border-radius: 0.5rem;
+      background-color: transparent;
+      color: inherit;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: gray;
+      color: black;
+    }
+
+    .container {
+      width: 100vw;
+      min-height: 100vh;
+      padding: 2rem;
+      transition: background-color 0.6s ease, color 0.6s ease;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    header img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 2px solid gray;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 1px solid gray;
+      border-radius: 1rem;
+      transition: background-color 0.6s ease, color 0.6s ease, border 0.6s ease;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .social-links a {
+      padding: 0.3rem 0.8rem;
+      border: 1px solid gray;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background-color: gray;
+      color: black;
+    }
+
+    .member-card, .leader-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid gray;
+      border-radius: 0.5rem;
+      padding: 0.8rem;
+      flex-wrap: wrap;
+      transition: background-color 0.6s ease, color 0.6s ease, border 0.6s ease;
+    }
+
+    .member-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: gray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .crown {
+      margin-left: 0.3rem;
+      color: gold;
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 1px solid gray;
+      border-radius: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* === MODO CLARO / ESCURO === */
+    .dark-mode {
+      background-color: #000;
+      color: white;
+    }
+
+    .light-mode {
+      background-color: white;
+      color: black;
+    }
+
+    /* === TOGGLE SWITCH === */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom:1rem;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 80px;
+      height: 34px;
+    }
+
+    .switch input { display: none; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #2196F3;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #555;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(46px);
+    }
+
+    .label-text {
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .light-text, .dark-text {
+      color: #ccc;
+    }
+
+    @media (max-width:1024px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width:600px) {
+      header { flex-direction: column; align-items: flex-start; }
+      nav { flex-wrap: wrap; }
+      .member-card, .leader-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container dark-mode" id="main-container">
+    <header>
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <img src="https://i.postimg.cc/6QpWx908/raw.webp" alt="HyperClan logo">
+        <div>
+          <h1>HyperClan</h1>
+          <p>亗Hyper Clan™</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#home">Início</a>
+        <a href="#about">Sobre</a>
+        <a href="#members">Membros</a>
+        <a href="#leaders">Líderes</a>
+      </nav>
+    </header>
+
+    <div class="theme-toggle">
+      <span class="label-text light-text">LIGHT</span>
+      <label class="switch">
+        <input type="checkbox" id="mode-toggle">
+        <span class="slider"></span>
+      </label>
+      <span class="label-text dark-text">DARK</span>
+    </div>
+
+    <!-- Hero -->
+    <section id="home">
+      <div class="grid-2">
+        <div>
+          <h2 style="font-size:2.5rem; font-weight:bold;">Bem-vindo ao HyperClan</h2>
+          <p style="margin-top:1rem; opacity:0.8;">Somos uma guilda de Free Fire focada em competição, comunidade e diversão — venha fazer parte.</p>
+          <div style="margin-top:1rem; display:flex; flex-wrap: wrap; gap:1rem;">
+            <a href="#members" class="btn">Top Membros</a>
+          </div>
+          <div style="margin-top:1rem;">
+            <h3 style="opacity:0.8;">Redes sociais</h3>
+            <div class="social-links">
+              <a href="https://www.instagram.com/guilda_hyper_clan/" target="_blank">Instagram</a>
+              <a href="#">YouTube</a>
+              <a href="#">Discord</a>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; padding-right:2rem;">
+          <div style="width:200px; height:200px; border:4px solid gray; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <img src="https://i.postimg.cc/6QpWx908/raw.webp" alt="Logomarca HyperClan" style="width:140px; height:140px; border-radius:50%; object-fit:contain;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <h3 style="font-size:1.5rem; font-weight:bold;">Sobre o HyperClan</h3>
+      <p style="margin-top:1rem; opacity:0.8;">O HyperClan é uma guilda de Free Fire que busca o Melhor entre competição e comunidade. Nosso lema e símbolo representam honra, estratégia, união e persistência.</p>
+      <div style="margin-top:1rem;">
+        <strong>Lema:</strong>
+        <div style="margin-top:0.5rem; padding:0.5rem; border:1px solid gray; font-weight:bold; border-radius:0.5rem;">Beyond Limits</div>
+      </div>
+    </section>
+
+    <!-- Members -->
+    <section id="members">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:1.5rem; font-weight:bold;">Painel: Melhores Membros</h3>
+        <span style="opacity:0.8;">Atualizado automaticamente</span>
+      </div>
+      <div id="members-list" style="margin-top:1rem; display:grid; gap:1rem;"></div>
+    </section>
+
+    <!-- Leaders -->
+    <section id="leaders">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:1.5rem; font-weight:bold;">Painel: Líderes</h3>
+        <span style="opacity:0.8;">Atualizado automaticamente</span>
+      </div>
+      <div id="leaders-list" style="margin-top:1rem; display:grid; gap:1rem;"></div>
+    </section>
+
+    <footer>
+      <div>
+        <div style="font-weight:bold;">HyperClan</div>
+        <div style="opacity:0.8;">© <span id="year"></span> HyperClan. Todos os direitos reservados.</div>
+      </div>
+      <div style="display:flex; gap:1rem;">
+        <a href="#">Termos</a>
+        <a href="#">Política</a>
+        <a href="#">Contato</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const toggleSwitch = document.getElementById('mode-toggle');
+    const container = document.getElementById('main-container');
+
+    toggleSwitch.addEventListener('change', () => {
+      container.style.transition = 'background-color 0.6s ease, color 0.6s ease';
+      if(toggleSwitch.checked){
+        container.classList.remove('dark-mode');
+        container.classList.add('light-mode');
+      } else {
+        container.classList.remove('light-mode');
+        container.classList.add('dark-mode');
+      }
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const topMembers = [
+      { name: "Rafael", score: 2540, tag: "HC-01" },
+      { name: "Luna", score: 2300, tag: "HC-02" },
+      { name: "Kuro", score: 2120, tag: "HC-03" },
+      { name: "Valk", score: 1980, tag: "HC-04" },
+      { name: "Zero", score: 1760, tag: "HC-05" }
+    ];
+
+    const membersList = document.getElementById('members-list');
+    topMembers.forEach((m, i) => {
+      const div = document.createElement('div');
+      div.className = 'member-card';
+      div.innerHTML = `
+        <div class="member-avatar">${m.name.charAt(0)}</div>
+        <div style="flex:1;">
+          <div style="font-weight:bold;">${m.name} <span style="opacity:0.7; font-size:0.8rem;">${m.tag}</span></div>
+          <div style="opacity:0.8; font-size:0.9rem;">Pontos: ${m.score}</div>
+        </div>
+        <div style="text-align:right; opacity:0.8; font-size:0.9rem;">Rank #${i+1}</div>
+      `;
+      membersList.appendChild(div);
+    });
+
+    const leaders = [
+      { name: "HC Sr. Brafael", tag: "00" },
+      { name: "HC Travzinn", tag: "00" },
+      { name: "HC Desconhecido", tag: "01" },
+      { name: "HC Desconhecido", tag: "02" },
+      { name: "HC Desconhecido", tag: "03" },
+      { name: "HC Desconhecido", tag: "04" }
+    ];
+
+    const leadersList = document.getElementById('leaders-list');
+    leaders.forEach((l, i) => {
+      const div = document.createElement('div');
+      div.className = 'leader-card';
+      const isHighlight = l.tag === "00";
+      div.innerHTML = `
+        <div style="flex:1;">
+          <div style="font-weight:bold;">
+            ${l.name} 
+            <span style="opacity:0.7; font-size:0.8rem;">
+              ${isHighlight ? 'Cargo 00' : l.tag}
+            </span>
+            ${isHighlight ? '<span class="crown">👑</span>' : ''}
+          </div>
+        </div>
+      `;
+      leadersList.appendChild(div);
+    });
+  </script>
+</body>
+</html>
