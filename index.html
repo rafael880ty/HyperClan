@@ -50,9 +50,7 @@
     section { margin-top:2rem; padding:1.5rem; border:1px solid gray; border-radius:1rem; transition:0.6s; }
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:center; }
     .social-links { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem; }
-    .social-links a {
-      padding:0.3rem 0.8rem; border:1px solid gray; border-radius:0.5rem; font-size:0.9rem; transition:0.3s;
-    }
+    .social-links a { padding:0.3rem 0.8rem; border:1px solid gray; border-radius:0.5rem; font-size:0.9rem; transition:0.3s; }
     .social-links a:hover { background-color:gray; color:black; }
     .social-links a.discord:hover { background-color:#5865F2; color:white; border-color:#5865F2; }
 
@@ -67,7 +65,6 @@
       flex-wrap:wrap;
       transition:0.6s;
     }
-
     .member-avatar {
       width:48px; height:48px;
       border-radius:50%;
@@ -178,6 +175,120 @@
     </div>
   </section>
 
-  <!-- AVISOS SIMPLES -->
+  <!-- AVISOS -->
   <section id="avisos">
-    <h3 style="font-size:1.5rem; font-weight:bold;">Avisos</
+    <h3 style="font-size:1.5rem; font-weight:bold;">Avisos</h3>
+    <div style="margin-top:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+      <!-- Aqui você escreve seus avisos -->
+      <div class="aviso-card">Aviso 1: Treino hoje às 20h.</div>
+      <div class="aviso-card">Aviso 2: Novo evento chegando!</div>
+      <div class="aviso-card">Aviso 3: Ranking atualizado no final da semana.</div>
+    </div>
+  </section>
+
+  <!-- MEMBROS -->
+  <section id="members">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="font-size:1.5rem; font-weight:bold;">Painel: Melhores Membros</h3>
+      <span style="opacity:0.8;">Atualizado automaticamente</span>
+    </div>
+    <div id="members-list" style="margin-top:1rem; display:grid; gap:1rem;"></div>
+  </section>
+
+  <!-- LÍDERES -->
+  <section id="leaders">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="font-size:1.5rem; font-weight:bold;">Painel: Líderes</h3>
+      <span style="opacity:0.8;">Atualizado automaticamente</span>
+    </div>
+    <div id="leaders-list" style="margin-top:1rem; display:grid; gap:1rem;"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div style="font-weight:bold;">HyperClan</div>
+      <div style="opacity:0.8;">© <span id="year"></span> HyperClan. Todos os direitos reservados.</div>
+    </div>
+    <div style="display:flex; gap:1rem;">
+      <a href="#">Termos</a>
+      <a href="#">Política</a>
+      <a href="#">Contato</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // === DARK / LIGHT MODE ===
+  const toggleSwitch = document.getElementById('mode-toggle');
+  const container = document.getElementById('main-container');
+
+  toggleSwitch.addEventListener('change', () => {
+    if(toggleSwitch.checked){
+      container.classList.remove('dark-mode');
+      container.classList.add('light-mode');
+    } else {
+      container.classList.remove('light-mode');
+      container.classList.add('dark-mode');
+    }
+  });
+
+  // Atualiza o ano automaticamente
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // === LISTA DE MEMBROS ===
+  const topMembers = [
+    { name: "Travizinn", score: 1659, tag: "HC-01" },
+    { name: "Sr. Brafael", score: 1599, tag: "HC-02" },
+    { name: "Jhonyy", score: 2120, tag: "HC-03" }
+  ];
+  const membersList = document.getElementById('members-list');
+  topMembers.forEach((m,i)=>{
+    const div = document.createElement('div');
+    div.className = 'member-card';
+    const isTop1 = i===0;
+    div.innerHTML = `
+      <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+        ${isTop1 ? '<div class="crown-top">👑</div>' : ''}
+        <div class="member-avatar ${isTop1 ? 'top1' : ''}">${m.name.charAt(0)}</div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-weight:bold;">${m.name} <span style="opacity:0.7; font-size:0.8rem;">${m.tag}</span></div>
+        <div style="opacity:0.8; font-size:0.9rem;">Pontos: ${m.score}</div>
+      </div>
+      <div style="text-align:right; opacity:0.8; font-size:0.9rem;">Rank #${i+1}</div>
+    `;
+    membersList.appendChild(div);
+  });
+
+  // === LISTA DE LÍDERES ===
+  const leaders = [
+    { name:"HC Sr. Brafael", tag:"00" },
+    { name:"HC Travzinn", tag:"00" },
+    { name:"HC Desconhecido", tag:"01" },
+    { name:"HC Desconhecido", tag:"02" },
+    { name:"HC Desconhecido", tag:"03" },
+    { name:"HC Desconhecido", tag:"04" }
+  ];
+  const leadersList = document.getElementById('leaders-list');
+  leaders.forEach(l=>{
+    const div=document.createElement('div');
+    div.className='leader-card';
+    const isHighlight = l.tag==="00";
+    div.innerHTML=`
+      <div style="flex:1;">
+        <div style="font-weight:bold;">
+          ${l.name} 
+          <span style="opacity:0.7; font-size:0.8rem;">
+            ${isHighlight ? 'Cargo 00' : l.tag}
+          </span>
+          ${isHighlight ? '<span class="crown">👑</span>' : ''}
+        </div>
+      </div>
+    `;
+    leadersList.appendChild(div);
+  });
+</script>
+</body>
+</html>
