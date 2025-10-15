@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HyperClan</title>
-  <!-- Favicon da guilda -->
   <link rel="icon" type="image/webp" href="https://i.postimg.cc/6QpWx908/raw.webp">
   <style>
     * {
@@ -120,6 +119,13 @@
       color: black;
     }
 
+    /* Efeito especial para o Discord */
+    .social-links a.discord:hover {
+      background-color: #5865F2;
+      color: white;
+      border-color: #5865F2;
+    }
+
     .member-card, .leader-card {
       display: flex;
       align-items: center;
@@ -175,7 +181,6 @@
       gap: 1rem;
     }
 
-    /* === MODO CLARO / ESCURO === */
     .dark-mode {
       background-color: #000;
       color: white;
@@ -186,7 +191,6 @@
       color: black;
     }
 
-    /* === TOGGLE SWITCH === */
     .theme-toggle {
       display: flex;
       align-items: center;
@@ -297,7 +301,7 @@
             <div class="social-links">
               <a href="https://www.instagram.com/guilda_hyper_clan/" target="_blank">Instagram</a>
               <a href="#">YouTube</a>
-              <a href="#">Discord</a>
+              <a href="https://discord.gg/E7rM4YnDw8" class="discord" target="_blank">Discord</a>
             </div>
           </div>
         </div>
@@ -379,9 +383,7 @@
     topMembers.forEach((m, i) => {
       const div = document.createElement('div');
       div.className = 'member-card';
-      
       const isTop1 = i === 0;
-      
       div.innerHTML = `
         <div style="position:relative; display:flex; align-items:center; justify-content:center;">
           ${isTop1 ? '<div class="crown-top">👑</div>' : ''}
@@ -406,7 +408,7 @@
     ];
 
     const leadersList = document.getElementById('leaders-list');
-    leaders.forEach((l, i) => {
+    leaders.forEach((l) => {
       const div = document.createElement('div');
       div.className = 'leader-card';
       const isHighlight = l.tag === "00";
