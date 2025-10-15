@@ -126,7 +126,7 @@
       border-color: #5865F2;
     }
 
-    .member-card, .leader-card {
+    .member-card, .leader-card, .aviso-card {
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -253,7 +253,7 @@
     @media (max-width:600px) {
       header { flex-direction: column; align-items: flex-start; }
       nav { flex-wrap: wrap; }
-      .member-card, .leader-card {
+      .member-card, .leader-card, .aviso-card {
         flex-direction: column;
         align-items: flex-start;
       }
@@ -273,6 +273,7 @@
       <nav>
         <a href="#home">Início</a>
         <a href="#about">Sobre</a>
+        <a href="#avisos">Avisos</a>
         <a href="#members">Membros</a>
         <a href="#leaders">Líderes</a>
       </nav>
@@ -323,6 +324,12 @@
       </div>
     </section>
 
+    <!-- Avisos -->
+    <section id="avisos">
+      <h3 style="font-size:1.5rem; font-weight:bold;">Avisos</h3>
+      <div id="avisos-list" style="margin-top:1rem; display:flex; flex-direction:column; gap:0.5rem;"></div>
+    </section>
+
     <!-- Members -->
     <section id="members">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -371,6 +378,7 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Membros
     const topMembers = [
       { name: "Travizinn", score: 1659, tag: "HC-01" },
       { name: "Sr. Brafael", score: 1599, tag: "HC-02" },
@@ -396,6 +404,7 @@
       membersList.appendChild(div);
     });
 
+    // Líderes
     const leaders = [
       { name: "HC Sr. Brafael", tag: "00" },
       { name: "HC Travzinn", tag: "00" },
@@ -423,7 +432,24 @@
       `;
       leadersList.appendChild(div);
     });
+
+    // Avisos
+    const avisos = [
+      { date: "20/10/2025", text: "Vai ter treino às 18h no Discord." },
+      { date: "22/10/2025", text: "Nova competição interna da guilda." },
+      { date: "25/10/2025", text: "Atualização do ranking de membros." }
+    ];
+
+    const avisosList = document.getElementById('avisos-list');
+    avisos.forEach(a => {
+      const div = document.createElement('div');
+      div.className = 'aviso-card';
+      div.style.backgroundColor = 'rgba(128,128,128,0.1)';
+      div.style.borderRadius = '0.3rem';
+      div.style.padding = '0.5rem';
+      div.innerHTML = `📌 <strong>${a.date}:</strong> ${a.text}`;
+      avisosList.appendChild(div);
+    });
   </script>
 </body>
 </html>
-
